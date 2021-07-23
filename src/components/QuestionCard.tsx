@@ -17,6 +17,7 @@ export const QuestionCard: React.FC<Props> = ({
   questionNr,
   totalQuestions,
 }) => {
+  console.log("i am from user answer in card", userAnswer);
   return (
     <div>
       <p className="number">
@@ -24,10 +25,9 @@ export const QuestionCard: React.FC<Props> = ({
       </p>
       <p dangerouslySetInnerHTML={{ __html: question }} />
       <div>
-        {answers?.map((answer) => (
+        {answers.map((answer) => (
           <div key={answer}>
-            <button disabled={userAnswer} onClick={callback} />
-            <button dangerouslySetInnerHTML={{ __html: answer }} />
+            <button onClick={callback}>{answer}</button>
           </div>
         ))}
       </div>

@@ -3,14 +3,12 @@ import { useState } from "react";
 import { Difficulty, fetchQuizQuestions, QuestionsState } from "./API";
 import QuestionCard from "./components/QuestionCard";
 type AnswerObject = {
-  questions: string;
+  question: string;
   answer: string;
   correct: boolean;
   correctAnswer: string;
 };
 function App() {
-  const checkAnswer = () => {};
-  const nextQuestion = () => {};
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionsState[]>([]);
   const [number, setNumber] = useState(0);
@@ -30,6 +28,31 @@ function App() {
     setUserAnswers([]);
     setNumber(0);
     setLoading(false);
+  };
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      const answer = e.currentTarget.value;
+
+      const correct = questions[number].correct_answer === answer;
+
+      if (correct) setScore((prev) => prev + 1);
+
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      };
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+  };
+  const nextQuestion = () => {
+    const nextQuestion = number + 1;
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      setNumber(nextQuestion);
+    }
   };
   console.log(questions);
 
