@@ -1,12 +1,15 @@
 import React from "react";
 
+import { AnswerObject } from "../App";
+
 type Props = {
   question: string;
   answers: string[];
-  callback: any;
-  userAnswer: any;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userAnswer: AnswerObject[] | undefined;
   questionNr: number;
   totalQuestions: number;
+  showNextButton: boolean;
 };
 
 export const QuestionCard: React.FC<Props> = ({
@@ -16,8 +19,9 @@ export const QuestionCard: React.FC<Props> = ({
   userAnswer,
   questionNr,
   totalQuestions,
+  showNextButton,
 }) => {
-  console.log("i am from user answer in card", userAnswer);
+  //   console.log("i am from user answer in card", userAnswer);
   return (
     <div>
       <p className="number">
@@ -27,7 +31,9 @@ export const QuestionCard: React.FC<Props> = ({
       <div>
         {answers.map((answer) => (
           <div key={answer}>
-            <button onClick={callback}>{answer}</button>
+            <button disabled={showNextButton} onClick={callback}>
+              {answer}
+            </button>
           </div>
         ))}
       </div>
